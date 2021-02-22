@@ -37,4 +37,12 @@ object WhatsWrong2 {
       (ceo, enterprise)
     }
   }
+
+  //Better handling of the Option ceo_id
+  def getCEOAndEnterpriseBetter(ceo_id: Option[String]): Future[(Option[CEO], Option[Enterprise])] = {
+    for {
+      ceo <- ceo_id.map(CEODao.byId(_)).getOrElse(Future(None))
+      enterprise <- ceo_id.map(EnterpriseDao.byCEOId(_)).getOrElse(Future(None))
+    } yield (ceo, enterprise)
+  }
 }

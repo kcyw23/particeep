@@ -9,9 +9,13 @@ object WhatsWrong1 {
 
   case object Supporter extends Interface {
 
-    override val city = "Paris"
+    override lazy val city = "Paris"
   }
 
   Supporter.city //What does this print ?
+  //Paris
   Supporter.support //What does this print and why ? How to fix it ?
+  //Ici c'est null
+  //The trait is initialized before the object.
+  //Use lazy val in the object
 }

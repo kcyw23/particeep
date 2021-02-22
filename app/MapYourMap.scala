@@ -10,5 +10,8 @@ object MapYourMap {
   val devNames = Map("dev1" -> "Pierre", "dev2" -> "Remy", "dev3" -> "Noe", "dev4" -> "Alexandre")
   val devDepartments = Map("dev1" -> "analytics", "dev2" -> "frontend", "dev3" -> "api", "dev4" -> "frontend")
 
-  val namesInDepartments:Map[String, List[String]] = ???
+  val namesInDepartments: Map[String, List[String]] = devNames
+    .map(name => (name._1, (devDepartments.get(name._1).getOrElse("no department"), name._2)))
+    .groupBy(_._2._1)
+    .map(departmentName => (departmentName._1, departmentName._2.values.map(_._2).toList))
 }

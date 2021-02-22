@@ -17,14 +17,17 @@ object BasicScala {
     * input  : Map()
     * output : ""
     */
-  def encodeParamsInUrl(params: Map[String, String]): String = ???
+  def encodeParamsInUrl(params: Map[String, String]): String =
+    params
+      .map(tuple => s"${tuple._1}=${tuple._2}")
+      .mkString("?","&","")
 
 
   /**
     * Test if a String is an email
     */
-  def isEmail(maybeEmail: String): Boolean = ???
-
+  def isEmail(maybeEmail: String): Boolean =
+    """(?=[^\s]+)(?=(\w+)@([\w\.]+))""".r.findFirstIn(maybeEmail).isDefined
 
   /**
     * Compute i ^ n
@@ -37,7 +40,15 @@ object BasicScala {
     * input : (i = 99, n = 38997)
     * output : 1723793299
     */
-  def power(i:Int, n:Int):Int = ???
-
+  def power(i: Int, n: Int): Int = {
+    n match {
+      case 0 => 1
+      case 1 => i
+      case _ =>
+        if (n % 2 == 0)
+          power(i * i, n / 2)
+        else i * power(i * i, (n - 1) / 2)
+    }
+  }
 
 }
